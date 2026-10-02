@@ -14,7 +14,7 @@ export default function App() {
       fetch("https://api.apilayer.com/exchangerates_data/latest", {
         method: "GET",
         headers: {
-          apikey: "vQvnm1tjnJZtxzNWSgiTfEVPXxZU9lS1",
+          apikey: process.env.EXPO_PUBLIC_API_KEY || "",
         },
       })
         .then((response) => {
