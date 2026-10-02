@@ -12,19 +12,23 @@ export default function App() {
   useEffect(() => {
     const fetchData = () => {
       fetch("https://api.apilayer.com/exchangerates_data/latest", {
+        method: "GET",
         headers: {
-          apikey: "vQvnm1tjnJZtxzNWSgiTfEVPXxZU9IS1",
+          apikey: "vQvnm1tjnJZtxzNWSgiTfEVPXxZU9lS1",
         },
       })
         .then((response) => {
+          console.log("Status Code:", response.status);
           if (!response.ok) {
-            throw new Error(
-              "Error fetching exchange rates" + response.statusText,
-            );
+            throw new Error(`Error fetching: status ${response.status}`);
           }
           return response.json();
         })
-        .then((data) => setInterestRate(data.rates))
+        .then((data) => {
+          if (data.rates) {
+            setInterestRate(data.rates);
+          }
+        })
         .catch((error) =>
           console.error("Error fetching exchange rates:", error),
         );
@@ -59,7 +63,13 @@ export default function App() {
 
         <Text>Euro Converter</Text>
 
-        <Text>{result.toFixed(2)} €</Text>
+        <Text
+          style={{
+            fontSize: 20,
+          }}
+        >
+          {result.toFixed(2)} €
+        </Text>
 
         <TextInput
           placeholder="Enter amount"
@@ -69,12 +79,9 @@ export default function App() {
             setAmount(isNaN(parsed) ? 0 : parsed);
           }}
           style={{
-            height: 40,
             borderColor: "gray",
             borderWidth: 1,
-            marginBottom: 10,
             width: 200,
-            paddingHorizontal: 10,
           }}
         />
 
