@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, Image, Button, TextInput } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -6,10 +5,9 @@ import { Picker } from "@react-native-picker/picker";
 
 export default function App() {
   const [amount, setAmount] = useState(0);
-  const [interestRate, setInterestRate] = useState({});
-  const [selectedCurrency, setSelectedCurrency] = useState({});
+  const [interestRate, setInterestRate] = useState<Record<string, number>>({});
+  const [selectedCurrency, setSelectedCurrency] = useState("");
   const [result, setResult] = useState(0);
-  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchData = () => {
