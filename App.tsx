@@ -2,12 +2,12 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, Image, Button, TextInput } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import * as ImagePicker from "expo-image-picker";
+import { Picker } from "@react-native-picker/picker";
 
 export default function App() {
   const [amount, setAmount] = useState(0);
-  const [interestRate, setInterestRate] = useState(0);
-  const [selectedCurrency, setSelectedCurrency] = useState("EUR");
+  const [interestRate, setInterestRate] = useState({});
+  const [selectedCurrency, setSelectedCurrency] = useState({});
   const [result, setResult] = useState(0);
   const [image, setImage] = useState(null);
 
@@ -61,9 +61,7 @@ export default function App() {
 
         <Text>Euro Converter</Text>
 
-        <Text>
-          {result.toFixed(2)} €
-        </Text>
+        <Text>{result.toFixed(2)} €</Text>
 
         <TextInput
           placeholder="Enter amount"
@@ -81,6 +79,16 @@ export default function App() {
             paddingHorizontal: 10,
           }}
         />
+
+        <Picker
+          selectedValue={selectedCurrency}
+          style={{ height: 50, width: 150 }}
+          onValueChange={(itemValue) => setSelectedCurrency(itemValue)}
+        >
+          {Object.keys(interestRate).map((currency) => (
+            <Picker.Item key={currency} label={currency} value={currency} />
+          ))}
+        </Picker>
 
         <Button title="CONVERT" onPress={handleConvert} />
       </SafeAreaView>
